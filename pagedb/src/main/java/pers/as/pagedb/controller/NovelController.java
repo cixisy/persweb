@@ -12,7 +12,7 @@ public class NovelController {
 
     @Autowired
     private NovelService novelService;
-
+    @CrossOrigin(origins = "*",maxAge = 3600)
     @GetMapping("/getbyid")
     @ResponseBody
     public Novel getById( Integer id){
