@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import pers.as.pagedb.entity.Novel;
 import pers.as.pagedb.service.NovelService;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/novel")
 public class NovelController {
@@ -21,5 +23,14 @@ public class NovelController {
         Novel novel1 = new Novel(1, "eq","ew","ew","wew","we");
         return novel;
     }
+    @CrossOrigin(origins = "*",maxAge = 3600)
+    @GetMapping("/getlist")
+    @ResponseBody
+    public List<Novel> getList(){
+
+
+        return this.novelService.getList();
+    }
+
 
 }
