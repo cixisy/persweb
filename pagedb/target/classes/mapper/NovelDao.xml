@@ -22,7 +22,7 @@
     <select id="getList" resultType="pers.as.pagedb.entity.Novel">
         select
             id, novelname, author, img, comments, description
-        from aspage.novel limit 10
+        from aspage.novel order by id limit 10
     </select>
 
 </mapper>
