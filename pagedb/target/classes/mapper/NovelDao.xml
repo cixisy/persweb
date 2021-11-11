@@ -24,5 +24,10 @@
             id, novelname, author, img, comments, description
         from aspage.novel order by id limit 10
     </select>
+    <select id="getListByname" resultType="pers.as.pagedb.entity.Novel">
+        select
+            id, novelname, author, img, comments, description
+        from aspage.novel where novelname like "%"#{name}"%" order by id limit 10
+    </select>
 
 </mapper>

@@ -9,4 +9,6 @@ public interface NovelDao {
     Novel getById(Integer id);
 
     List<Novel> getList();
+
+    List<Novel> getListByname(String name);
 }

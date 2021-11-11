@@ -8,4 +8,6 @@ public interface NovelService {
     Novel getById(Integer id);
 
     List<Novel> getList();
+
+    List<Novel> getListByname(String name);
 }

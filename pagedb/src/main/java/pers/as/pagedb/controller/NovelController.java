@@ -31,6 +31,15 @@ public class NovelController {
 
         return this.novelService.getList();
     }
+    @CrossOrigin(origins = "*",maxAge = 3600)
+    @GetMapping("/getlistbyname")
+    @ResponseBody
+    public List<Novel> getListByName(String nname){
+
+        System.out.println(nname);
+        List<Novel> novels = this.novelService.getListByname(nname);
+        return novels;
+    }
 
 
 }

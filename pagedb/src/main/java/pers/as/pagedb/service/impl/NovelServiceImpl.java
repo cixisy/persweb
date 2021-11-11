@@ -24,4 +24,9 @@ public class NovelServiceImpl implements NovelService {
     public List<Novel> getList() {
         return this.novelDao.getList();
     }
+
+    @Override
+    public List<Novel> getListByname(String name) {
+        return this.novelDao.getListByname(name);
+    }
 }
