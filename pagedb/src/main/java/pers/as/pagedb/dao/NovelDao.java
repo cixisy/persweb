@@ -1,7 +1,6 @@
 package pers.as.pagedb.dao;
 
-import org.apache.ibatis.annotations.Mapper;
-import pers.as.pagedb.entity.Novel;
+import pers.as.pagedb.entity.novel.Novel;
 
 import java.util.List;
 
@@ -11,4 +10,6 @@ public interface NovelDao {
     List<Novel> getList();
 
     List<Novel> getListByname(String name);
+
+    void updateComment(int id,String comments);
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="pers.as.pagedb.dao.NovelDao">
 
-    <resultMap id="BaseResultMap" type="pers.as.pagedb.entity.Novel">
+    <resultMap id="BaseResultMap" type="pers.as.pagedb.entity.novel.Novel">
         <!--@Table novel-->
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="novelname" column="novelname" jdbcType="VARCHAR"/>
@@ -12,22 +12,26 @@
         <result property="description" column="description" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <select id = "getById" parameterType="Integer" resultType="pers.as.pagedb.entity.Novel">
+    <select id = "getById" parameterType="Integer" resultType="pers.as.pagedb.entity.novel.Novel">
         select
             id, novelname, author, img, comments, description
         from aspage.novel
         where id = #{id}
     </select>
 
-    <select id="getList" resultType="pers.as.pagedb.entity.Novel">
+    <select id="getList" resultType="pers.as.pagedb.entity.novel.Novel">
         select
             id, novelname, author, img, comments, description
         from aspage.novel order by id limit 10
     </select>
-    <select id="getListByname" resultType="pers.as.pagedb.entity.Novel">
+    <select id="getListByname" resultType="pers.as.pagedb.entity.novel.Novel">
         select
             id, novelname, author, img, comments, description
         from aspage.novel where novelname like "%"#{name}"%" order by id limit 10
     </select>
+
+    <update id ="updateComment" parameterType="Integer">
+        update aspage.novel set comments =#{comments} where id = #{id}
+    </update>
 
 </mapper>

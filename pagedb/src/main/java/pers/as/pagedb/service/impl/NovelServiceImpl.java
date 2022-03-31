@@ -3,7 +3,7 @@ package pers.as.pagedb.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pers.as.pagedb.dao.NovelDao;
-import pers.as.pagedb.entity.Novel;
+import pers.as.pagedb.entity.novel.Novel;
 import pers.as.pagedb.service.NovelService;
 
 import java.util.List;
@@ -28,5 +28,10 @@ public class NovelServiceImpl implements NovelService {
     @Override
     public List<Novel> getListByname(String name) {
         return this.novelDao.getListByname(name);
+    }
+
+    @Override
+    public void updateComment(int id, String comments) {
+        this.novelDao.updateComment(id,comments);
     }
 }

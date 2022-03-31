@@ -1,4 +1,4 @@
-package pers.as.pagedb.entity;
+package pers.as.pagedb.entity.novel;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

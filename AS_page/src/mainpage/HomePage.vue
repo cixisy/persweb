@@ -44,7 +44,7 @@
             <el-submenu index="2">
               <template slot="title">learn</template>
               <el-menu-item index="2-1">Web前端</el-menu-item>
-              <el-menu-item index="2-2">Java</el-menu-item>
+              <el-menu-item index="2-2" @click="toJava()">Java</el-menu-item>
               <el-menu-item index="2-3">服务器部署</el-menu-item>
             </el-submenu>
             <el-submenu index="3">
@@ -104,6 +104,9 @@
       },
       toNovel() {
         this.$router.push({path: "/Novel"})
+      },
+      toJava(){
+        this.$router.push({path: "/Java"})
       }
     }
   }
@@ -171,15 +174,15 @@
     text-align: center;
   }
 
-  .secondbox {
+ /* .secondbox {
     width: 100%;
     height: 100%;
     padding-top: 50px;
     display: flex;
-    position: absolute;
+    position:static;
     justify-content: space-between;
 
-  }
+  }*/
 
   .pagecontent {
     padding: 20px;
