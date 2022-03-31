@@ -1,9 +1,13 @@
 package astest.aboutexcel;
 
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
@@ -11,6 +15,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @ClassName: AboutExcel
+ * @description:
+ * @author: AS
+ * @create: 2022-03-31 16:38
+ */
 public class AboutExcel {
 
     /**
@@ -95,6 +105,7 @@ public class AboutExcel {
         }
         return value;
     }
+
     /**
      * 在控制台打印一个列表
      * @param list 输入为一个list<object>
@@ -110,5 +121,72 @@ public class AboutExcel {
         }
     }
 
+    /**
+     * 向excel文件中写入数据
+     * @param path excel地址
+     * @param list 数据二维list列表
+     */
+    public static void writeExcel(String path ,List<Object> list){
+
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("sheet1");
+            FileOutputStream out = new FileOutputStream(new File(path));//初始化输出流
+            if(list != null){
+                for(int i = 0; i<list.size();i++){
+                    List listrow = (List) list.get(i);
+                    XSSFRow row = sheet.createRow(i);
+                    for (int j = 0;j < listrow.size();j++){
+                        XSSFCell cell = row.createCell(j);
+                        cell.setCellValue((String) listrow.get(j));
+                    }
+                }
+            }
+            workbook.write(out);
+            workbook.close();//关闭excel文件操作
+            System.out.println("success");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+    /**
+     * 向excel文件中写入数据,自定义开始行和列。不覆盖原则
+     * @param path 写入excel地址
+     * @param list excel数据
+     * @param rowstart 开始行号
+     * @param colstart 开始列号
+     */
+    public static void writeExcel(String path ,List<Object> list,int rowstart,int colstart){
+
+        try {
+            XSSFWorkbook workbook = new XSSFWorkbook();
+            XSSFSheet sheet = workbook.createSheet("sheet1");
+            FileOutputStream out = new FileOutputStream(new File(path));//初始化输出流
+            if(list != null){
+                for(int i = rowstart; i<list.size()+rowstart;i++){
+                    List listrow = (List) list.get(i-rowstart);
+                    XSSFRow row = sheet.createRow(i);
+                    for (int j = colstart;j < listrow.size()+colstart;j++){
+                        XSSFCell cell = row.createCell(j);
+                        cell.setCellValue((String) listrow.get(j-colstart));
+                    }
+                }
+            }
+            workbook.write(out);
+            workbook.close();//关闭excel文件操作
+            System.out.println("success");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+
+    }
 
 }
