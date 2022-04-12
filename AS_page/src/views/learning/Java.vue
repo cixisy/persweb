@@ -54,6 +54,10 @@ export default {
         {
           linkname: "Git使用",
           linkurl: "https://www.jianshu.com/p/e57a4a2cf077"
+        },
+        {
+          linkname: "redis",
+          linkurl: "https://www.runoob.com/redis/redis-install.html"
         }
       ],
       currentIndex: 0

@@ -2,6 +2,7 @@ package astest;
 
 import astest.aboutexcel.AboutExcel;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -25,11 +26,23 @@ import java.util.List;
 public class ExcelTest {
     @Test
     public void excelfunTest (){
+        String path = ".\\src\\test\\testfile\\novels3.xlsx";
+
         List<Object> list = AboutExcel.getExcelList("C:\\Users\\AS\\Desktop\\aspagesql\\novels.xlsx",0,0,0,0);
         //AboutExcel.outputListValue(list);
-        String path = ".\\src\\test\\testfile\\novels2.xlsx";
-        AboutExcel.writeExcel(path,list);
+        //AboutExcel.writeExcel(path,list);
+        AboutExcel.writeExcel(path,list,18,0);
+
     }
+    @Test
+    public void test1(){
+        List list = new ArrayList();
+        list.add(1);
+        System.out.println(BigDecimal.ZERO);;
+    }
+
+
+
     @Test
     public void testfun() throws IOException, InvalidFormatException {
         String path = ".\\src\\test\\testfile\\novels2.xlsx";

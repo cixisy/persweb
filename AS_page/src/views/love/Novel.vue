@@ -78,7 +78,7 @@ export default {
   methods: {
     getlist() {
       console.log(this.value1);
-      this.axios.get('http://localhost:8088/novel/getlist').then((response) => {
+      this.axios.get('/api/novel/getlist').then((response) => {
         this.novellist = response.data;
         console.log(this.novellist)
       }).catch((response) => {
@@ -92,7 +92,7 @@ export default {
     searchByName(){
       console.log(this.value1);
       console.log(this.lovevalue);
-      this.axios.get('http://localhost:8088/novel/getlistbyname',{params: {nname : this.value1} }).then((response) => {
+      this.axios.get('/api/novel/getlistbyname',{params: {nname : this.value1} }).then((response) => {
         this.novellist = response.data;
         console.log(this.novellist)
       }).catch((response) => {

@@ -1,10 +1,6 @@
 package astest.aboutexcel;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -88,16 +84,16 @@ public class AboutExcel {
             case NUMERIC:
                 value = new BigDecimal(cell.getNumericCellValue()) ;
             case FORMULA:
-                switch (cell.getCachedFormulaResultType()){
-                    case NUMERIC:
-                        value = cell.getNumericCellValue();
-                        break;
-                    case STRING:
-                        value = cell.getRichStringCellValue();
-                    default:
-                        value = cell.toString();
-                        break;
+                if(cell.getCachedFormulaResultType()==CellType.NUMERIC)
+                {
+                    value = cell.getNumericCellValue();
+                    break;
                 }
+                else if(cell.getCachedFormulaResultType()==CellType.STRING)
+                {
+                    value = cell.getRichStringCellValue();
+                    break;
+                }else
                 break;
             default:
                 value = cell.toString();
@@ -155,8 +151,8 @@ public class AboutExcel {
     }
 
     /**
-     * 向excel文件中写入数据,自定义开始行和列。不覆盖原则
-     * @param path 写入excel地址
+     * 向excel文件中写入数据,自定义开始行和列。不清空原表。
+     * @param path 写入excel地址,要求excel必须存在。
      * @param list excel数据
      * @param rowstart 开始行号
      * @param colstart 开始列号
@@ -164,19 +160,29 @@ public class AboutExcel {
     public static void writeExcel(String path ,List<Object> list,int rowstart,int colstart){
 
         try {
-            XSSFWorkbook workbook = new XSSFWorkbook();
-            XSSFSheet sheet = workbook.createSheet("sheet1");
-            FileOutputStream out = new FileOutputStream(new File(path));//初始化输出流
+            File file = new File(path);
+            if(!file.exists()){
+                System.out.println("所属文件不存在！");
+                return;
+            }
+            FileInputStream fileInputStream = new FileInputStream(path);
+            XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);
+            XSSFSheet sheet = workbook.getSheetAt(0);
+
             if(list != null){
                 for(int i = rowstart; i<list.size()+rowstart;i++){
                     List listrow = (List) list.get(i-rowstart);
-                    XSSFRow row = sheet.createRow(i);
+                    if(sheet.getRow(i)==null){
+                        XSSFRow row = sheet.createRow(i);
+                    }
+                    XSSFRow row = sheet.getRow(i);
                     for (int j = colstart;j < listrow.size()+colstart;j++){
                         XSSFCell cell = row.createCell(j);
-                        cell.setCellValue((String) listrow.get(j-colstart));
+                        cell.setCellValue((String) listrow.get(j-colstart).toString());
                     }
                 }
             }
+            FileOutputStream out = new FileOutputStream(new File(path));//初始化输出流
             workbook.write(out);
             workbook.close();//关闭excel文件操作
             System.out.println("success");
@@ -184,9 +190,7 @@ public class AboutExcel {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-
         }
-
     }
 
 }
