@@ -19,19 +19,20 @@ export default {
   },
   methods:{
     loginop(){
-      this.axios.get('/api/login/syslogin').then((response) => {
+      this.axios.get('/api/login/syslogin2').then((response) => {
         var result = response.data;
-        console.log(result)
-      }).catch((response) => {
-        console.log(response);
+        console.log(result);
         this.$message({
           type: 'success',
-          message: response,
+          message: response.data,
           showClose: false,
           duration: 3000,
           center: true,
           dangerouslyUseHtmlString: false
         })
+      }).catch((response) => {
+        console.log(response);
+
       })
 
 
