@@ -28,7 +28,8 @@ public class AboutExcel {
      * @param offsetnum 读取excel行的偏移量，偏移量为0时加载所有行
      * @return 返回一个二位list对象
      */
-    public static List<Object> getExcelList(String path,int sheetnum,int startrow,int startcol,int offsetnum){
+    public static List<Object> getExcelList(String path,int sheetnum,int startrow,
+                                            int startcol,int offsetnum){
         //初始化文件和结果表
         File file = new File(path);
         List<Object> list = new ArrayList<>();
