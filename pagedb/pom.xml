@@ -12,7 +12,21 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
-
+    <!-- 环境隔离   -->
+    <profiles>
+        <profile>
+            <id>dev-redmi</id>
+            <properties>
+                <env>dev-redmi</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev-home</id>
+            <properties>
+                <env>dev-home</env>
+            </properties>
+        </profile>
+    </profiles>
 
     <dependencies>
 
@@ -27,7 +41,6 @@
             <version>1.7.26</version>
         </dependency>
 
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -39,19 +52,17 @@
             <version>2.3.0.RELEASE</version>
 
         </dependency>
+        <!--        数据库配置-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.36</version>
-
-
         </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.1.3</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -107,6 +118,7 @@
             <artifactId>poi-ooxml</artifactId>
             <version>4.0.1</version>
         </dependency>
+        
         <!--        kafka-->
         <dependency>
             <groupId>org.apache.kafka</groupId>

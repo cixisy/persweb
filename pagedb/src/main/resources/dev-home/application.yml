@@ -1,0 +1,12 @@
+server:
+  port: 8088
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/aspage??useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: as3650
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: classpath:pers.as.pagedb.entity
