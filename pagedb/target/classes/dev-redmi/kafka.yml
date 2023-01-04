@@ -1,22 +1,8 @@
-server:
-  port: 8088
-spring:
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/aspage??useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: root
-    password: as3650
-
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: classpath:pers.as.pagedb.entity
-
-
 kafka:
   bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
   #https://kafka.apache.org/documentation/#producerconfigs
   producer:
-    bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
+    bootstrap-servers: localhost:8088
     # 可重试错误的重试次数，例如“连接错误”、“无主且未选举出新Leader”
     retries: 1 #生产者发送消息失败重试次数
     # 多条消息放同一批次，达到多达就让Sender线程发送
@@ -53,13 +39,13 @@ kafka:
       #等待send回调的最大时间。常用语重试，如果一定要发送，retries则配Integer.MAX
       #如果超过该时间：TimeoutException: Expiring 1 record(s) .. has passed since batch creation
       delivery.timeout.ms: 120000
-      # 生产者在服务器响应之前能发多少个消息，若对消息顺序有严格限制，需要配置为1
-      # max.in.flight.requests.per.connection: 1
+        # 生产者在服务器响应之前能发多少个消息，若对消息顺序有严格限制，需要配置为1
+        # max.in.flight.requests.per.connection: 1
 
 
   #https://kafka.apache.org/documentation/#consumerconfigs
   consumer:
-    bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
+    bootstrap-servers: localhost:8088
     group-id: auto-dev #消费者组
     #消费方式: 在有提交记录的时候，earliest与latest是一样的，从提交记录的下一条开始消费
     # earliest：无提交记录，从头开始消费
