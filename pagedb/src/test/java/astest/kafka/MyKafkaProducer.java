@@ -12,12 +12,21 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 
 import com.alibaba.fastjson.JSON;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import pers.as.pagedb.config.kafkaconfig.AsProducer;
 
 /**
  * kafka生产者代码
  *
  */
+
 public class MyKafkaProducer {
+    @Test
+    public void test() throws InterruptedException {
+        AsProducer asProducer= new AsProducer();
+        asProducer.send();
+    }
 
     public static void main(String[] args) throws InterruptedException {
         Properties props = new Properties();
@@ -64,5 +73,11 @@ public class MyKafkaProducer {
 
         }
         producer.close();
+    }
+
+
+    @Test
+    public void test1(){
+        System.out.println("hello");;
     }
 }

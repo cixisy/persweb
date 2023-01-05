@@ -1,23 +1,35 @@
-askafka:
+server:
+  port: 8088
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/aspage??useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: as3650
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: classpath:pers.as.pagedb.entity
+
+
+kafka:
   bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
   #https://kafka.apache.org/documentation/#producerconfigs
   producer:
-    bootstrap_servers: 192.168.13.37:9900,192.168.13.37:9901
+    bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
     # 可重试错误的重试次数，例如“连接错误”、“无主且未选举出新Leader”
     retries: 1 #生产者发送消息失败重试次数
     # 多条消息放同一批次，达到多达就让Sender线程发送
-    batch_size: 16384 # 同一批次内存大小（默认16K）
+    batch-size: 16384 # 同一批次内存大小（默认16K）
     # 发送消息的速度超过发送到服务器的速度，会导致空间不足。send方法要么被阻塞，要么抛异常
     # 取决于如何设置max.block.ms，表示抛出异常前可以阻塞一段时间
-    #即使达不到batch-size设定的大小，只要超过这个毫秒的时间，一样会发送消息出去
-    linger_ms: 1000
-    buffer_memory: 314572800 #生产者内存缓存区大小(300M = 300*1024*1024)
+    buffer-memory: 314572800 #生产者内存缓存区大小(300M = 300*1024*1024)
     #acks=0:无论成功还是失败，只发送一次。无需确认
     #acks=1:即只需要确认leader收到消息
     #acks=all或-1:ISR + Leader都确定收到
     acks: 1
-    key_serializer: org.apache.kafka.common.serialization.StringSerializer #key的编解码方法
-    value_serializer: org.apache.kafka.common.serialization.StringSerializer #value的编解码方法
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer #key的编解码方法
+    value-serializer: org.apache.kafka.common.serialization.StringSerializer #value的编解码方法
     #开启事务，但是要求ack为all，否则无法保证幂等性
     #transaction-id-prefix: "COLA_TX"
     #额外的，没有直接有properties对应的参数，将存放到下面这个Map对象中，一并初始化
@@ -26,6 +38,8 @@ askafka:
       interceptor.classes: cn.com.controller.TimeInterceptor
       #自定义分区器
       #partitioner.class: com.alibaba.cola.kafka.test.customer.inteceptor.MyPartitioner
+      #即使达不到batch-size设定的大小，只要超过这个毫秒的时间，一样会发送消息出去
+      linger.ms: 1000
       #最大请求大小，200M = 200*1024*1024，与服务器broker的message.max.bytes最好匹配一致
       max.request.size: 209715200
       #Producer.send()方法的最大阻塞时间(115秒)
