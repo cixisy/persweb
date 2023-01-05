@@ -3,11 +3,8 @@ package pers.as.pagedb.config.kafkaconfig;
 import com.alibaba.fastjson.JSON;
 import lombok.Data;
 import org.apache.kafka.clients.producer.*;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +18,7 @@ import java.util.Properties;
  */
 @Data
 public class AsProducer {
-    private KafkaProducer<String, String> kafkaProducer;
+    private KafkaProducer<String, Object> kafkaProducer;
     private String bootstrap_servers;
     private String retries;
     private String batch_size;
@@ -31,17 +28,17 @@ public class AsProducer {
     private String key_serializer;
     private String value_serializer;
 
-    public AsProducer(){
+    public AsProducer() {
         setParam();
         Properties props = new Properties();
         // kafka集群，broker-list
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, this.bootstrap_servers);
+        //kafka收到消息的类型
         props.put(ProducerConfig.ACKS_CONFIG, this.acks);
         // 重试次数
         props.put("retries", this.retries);
         // 批次大小
         props.put("batch.size", this.batch_size);
-
         // 等待时间
         props.put("linger.ms", this.linger_ms);
         // RecordAccumulator缓冲区大小
@@ -49,12 +46,13 @@ public class AsProducer {
         // 设置序列化
         props.put("key.serializer", this.key_serializer);
         props.put("value.serializer", this.value_serializer);
-        this.kafkaProducer = new KafkaProducer<String, String>(props);
+        this.kafkaProducer = new KafkaProducer<String, Object>(props);
     }
+
     /*
     初始化参数
      */
-    public void setParam(){
+    public void setParam() {
         YamlPropertiesFactoryBean yamlProFb = new YamlPropertiesFactoryBean();
         yamlProFb.setResources(new ClassPathResource("/dev-redmi/kafka.yml"));
         Properties properties = yamlProFb.getObject();
@@ -71,13 +69,10 @@ public class AsProducer {
     /*
     kafka发送消息
      */
-    public void send() throws InterruptedException {
-        for (int i = 100; i < 200; i++) {
-            Map<String, Object> recordMap = new HashMap<String, Object>(20);
-            recordMap.put("seq", i);
-            recordMap.put("name", "测试" + i);
-            recordMap.put("age", i % 20);
-            ProducerRecord<String, String> producerRecord = new ProducerRecord<String, String>("Testtopic",
+    public void send(String i,Map recordMap) throws InterruptedException {
+
+
+            ProducerRecord<String, Object> producerRecord = new ProducerRecord<String, Object>("Testtopic",
                     String.valueOf(i), JSON.toJSONString(recordMap));
             this.kafkaProducer.send(producerRecord, new Callback() {
                 // 回调函数，该方法会在Producer收到ack时调用，为异步调用
@@ -90,19 +85,16 @@ public class AsProducer {
                                 e.getMessage());
 
                     } else {
-                        System.out.printf("消息发送成功:"+ topic+ partition+ offset);
+                        System.out.printf("消息发送成功:" + topic + partition + offset);
                     }
                 }
             });
 
             Thread.sleep(2 * 1000);
 
-        }
+
         kafkaProducer.close();
     }
-
-
-
 
 
 }

@@ -24,8 +24,12 @@ import pers.as.pagedb.config.kafkaconfig.AsProducer;
 public class MyKafkaProducer {
     @Test
     public void test() throws InterruptedException {
+        Map<String, Object> recordMap = new HashMap<String, Object>(20);
+        recordMap.put("seq", 12);
+        recordMap.put("name", "测试" + 12);
+        recordMap.put("age", 12 + 20);
         AsProducer asProducer= new AsProducer();
-        asProducer.send();
+        asProducer.send("12",recordMap);
     }
 
     public static void main(String[] args) throws InterruptedException {
