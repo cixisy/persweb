@@ -1,4 +1,4 @@
-askafka:
+kafka:
   bootstrap-servers: 192.168.13.37:9900,192.168.13.37:9901
   #https://kafka.apache.org/documentation/#producerconfigs
   producer:

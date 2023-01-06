@@ -56,14 +56,14 @@ public class AsProducer {
         YamlPropertiesFactoryBean yamlProFb = new YamlPropertiesFactoryBean();
         yamlProFb.setResources(new ClassPathResource("/dev-redmi/kafka.yml"));
         Properties properties = yamlProFb.getObject();
-        this.bootstrap_servers = properties.get("askafka.producer.bootstrap_servers").toString();
-        this.retries = properties.get("askafka.producer.retries").toString();
-        this.batch_size = properties.get("askafka.producer.batch_size").toString();
-        this.linger_ms = properties.get("askafka.producer.linger_ms").toString();
-        this.buffer_memory = properties.get("askafka.producer.buffer_memory").toString();
-        this.acks = properties.get("askafka.producer.acks").toString();
-        this.key_serializer = properties.get("askafka.producer.key_serializer").toString();
-        this.value_serializer = properties.get("askafka.producer.value_serializer").toString();
+        this.bootstrap_servers = properties.get("kafka.producer.bootstrap_servers").toString();
+        this.retries = properties.get("kafka.producer.retries").toString();
+        this.batch_size = properties.get("kafka.producer.batch_size").toString();
+        this.linger_ms = properties.get("kafka.producer.linger_ms").toString();
+        this.buffer_memory = properties.get("kafka.producer.buffer_memory").toString();
+        this.acks = properties.get("kafka.producer.acks").toString();
+        this.key_serializer = properties.get("kafka.producer.key_serializer").toString();
+        this.value_serializer = properties.get("kafka.producer.value_serializer").toString();
     }
 
     /*
